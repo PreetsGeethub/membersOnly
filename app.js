@@ -14,13 +14,18 @@ app.use(sessionMiddleware);
 app.use(passport.initialize());
 app.use(passport.session());
 
+// ⭐ MOVE THIS HERE (after passport.session)
+app.use((req, res, next) => {
+  res.locals.user = req.user;
+  next();
+});
+
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/',userRoutes);
-
+app.use('/', userRoutes);
 
 const PORT = 3000;
 app.listen(PORT, () => {
