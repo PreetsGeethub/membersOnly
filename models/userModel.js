@@ -14,4 +14,4 @@ async function createUser(data) {
   );
 }
 
-module.exports ={ createUser}
+module.exports = { createUser}
