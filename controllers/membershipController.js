@@ -1,4 +1,4 @@
-const {pool} = require('../db/pool')
+const pool = require('../db/pool')
 require('dotenv').config();
 
 async function joinClub(req,res) {
@@ -11,7 +11,7 @@ async function joinClub(req,res) {
             WHERE userid = $1       
             `,[req.user.userid]);
     
-            return res.redirrect('/');
+            return res.redirect('/');
     }
 
         res.render('joinClub', { error: "Incorrect passcode" });

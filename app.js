@@ -3,12 +3,14 @@ const app = express();
 
 const path = require('node:path');
 const userRoutes = require('./routes/userRoutes');
+const messageRoutes = require('./routes/messageRoutes');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 const sessionMiddleware = require("./config/session");
 const passport = require("./config/passport");
+const router = require('./routes/indexRoutes');
 
 app.use(sessionMiddleware);
 app.use(passport.initialize());
@@ -25,7 +27,9 @@ app.set("view engine", "ejs");
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/',router);
 app.use('/', userRoutes);
+app.use('/messages', messageRoutes);
 
 const PORT = 3000;
 app.listen(PORT, () => {

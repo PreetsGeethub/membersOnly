@@ -6,6 +6,7 @@ const {loginPost} = require('../controllers/authController')
 const {isAuthenticated} = require('../middleware/authMiddleware')
 const passport = require('../config/passport');
 const { joinClub } = require('../controllers/membershipController');
+const { createMessage } = require('../controllers/messageController');
 userRoutes.get('/sign-up', (req, res) => {
     res.render('signup', { errors: [] });
   });
@@ -29,7 +30,15 @@ userRoutes.post('/login',
 );
 
 userRoutes.post('/login',loginPost);
+userRoutes.get('/logout', (req, res, next) => {
 
+  req.logout(function(err) {
+    if (err) { return next(err); }
+
+    res.redirect('/');
+  });
+
+});
 
 
 userRoutes.get('/join-club', isAuthenticated, (req, res) => {
